@@ -7,6 +7,7 @@ set(OpenRAVE_PLUGINS_DIR "plugins")
 set(OpenRAVE_DATABASES_DIR "databases")
 
 function (openrave_plugin target_name)
+    cmake_policy(SET CMP0003 NEW)
     add_library("${target_name}" SHARED ${ARGN})
     target_link_libraries("${target_name}" ${OpenRAVE_LIBRARIES})
     message(STATUS ${INCLUDE_DIRECTORIES})
