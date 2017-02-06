@@ -6,11 +6,12 @@ set(OpenRAVE_DATA_DIR "data")
 set(OpenRAVE_PLUGINS_DIR "plugins")
 set(OpenRAVE_DATABASES_DIR "databases")
 
+
 function (openrave_plugin target_name)
     cmake_policy(SET CMP0003 NEW)
+    link_directories(${OpenRAVE_LIBRARY_DIRS})
     add_library("${target_name}" SHARED ${ARGN})
     target_link_libraries("${target_name}" ${OpenRAVE_LIBRARIES})
-    message(STATUS ${INCLUDE_DIRECTORIES})
     set_target_properties("${target_name}" PROPERTIES
         PREFIX ""
         COMPILE_FLAGS "${OpenRAVE_CXX_FLAGS}"
@@ -27,7 +28,7 @@ function (openrave_plugin target_name)
     # is the preferred method of creating a scoped include directory in future
     # versions.
     else ()
-        target_include_directories("${target_name}" PRIVATE "${OpenRAVE_INCLUDE_DIRS}")
+        target_include_directories("${target_name}" SYSTEM PRIVATE "${OpenRAVE_INCLUDE_DIRS}")
     endif ()
 
     install(TARGETS "${target_name}"
